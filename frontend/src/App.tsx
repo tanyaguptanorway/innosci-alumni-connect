@@ -40,7 +40,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-type Page =
+export type Page =
   | "home"
   | "register"
   | "dashboard"
@@ -49,7 +49,7 @@ type Page =
   | "jobs"
   | "admin";
 
-type Alumni = {
+export type Alumni = {
   name: string;
   year: string;
   role: string;
@@ -60,140 +60,31 @@ type Alumni = {
   program: string;
 };
 
-const photos = [
-  "https://images.unsplash.com/photo-1666867540898-aaa1993ffabc?auto=format&fit=crop&w=900&q=85",
-  "https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?auto=format&fit=crop&w=900&q=85",
-  "https://images.unsplash.com/photo-1563132337-f159f484226c?auto=format&fit=crop&w=900&q=85",
-  "https://images.unsplash.com/photo-1649532354755-d6e6ba515703?auto=format&fit=crop&w=900&q=85",
-  "https://images.unsplash.com/photo-1573497491207-618cc224f243?auto=format&fit=crop&w=900&q=85",
-];
+import data from "../../content/alumni.json";
+const {
+  alumnis,
+  job,
+  pendingSeeds,
+  pics,
+  pageLabel,
+  spotlight,
+} = data;
 
-const alumni: Alumni[] = [
-  {
-    name: "Amara Okafor",
-    year: "2018",
-    role: "Cloud Solutions Architect",
-    company: "Amazon Web Services",
-    location: "Lagos, Nigeria",
-    skills: ["AWS", "Cloud Architecture", "DevOps"],
-    image: photos[0],
-    program: "Cloud Computing",
-  },
-  {
-    name: "Kwame Mensah",
-    year: "2019",
-    role: "Senior Software Engineer",
-    company: "Flutterwave",
-    location: "Accra, Ghana",
-    skills: ["React", "Node.js", "FinTech"],
-    image: photos[1],
-    program: "Software Development",
-  },
-  {
-    name: "Zuri Adesina",
-    year: "2020",
-    role: "Data Analytics Lead",
-    company: "Andela",
-    location: "Nairobi, Kenya",
-    skills: ["Python", "Tableau", "AI"],
-    image: photos[2],
-    program: "Data Analytics",
-  },
-  {
-    name: "Tariq Bello",
-    year: "2017",
-    role: "Technical Programme Manager",
-    company: "Microsoft",
-    location: "London, UK",
-    skills: ["Agile", "Leadership", "Azure"],
-    image: photos[3],
-    program: "Project Management",
-  },
-  {
-    name: "Nia Boateng",
-    year: "2021",
-    role: "Cybersecurity Consultant",
-    company: "Deloitte",
-    location: "Toronto, Canada",
-    skills: ["Security", "Risk", "Governance"],
-    image: photos[4],
-    program: "Cybersecurity",
-  },
-];
+const photos = pics;
+
+const alumni: Alumni[] = alumnis;
 
 const spotlights = alumni.map((person, index) => ({
   ...person,
-  story: [
-    "Amara designs resilient cloud systems that help high-growth startups scale across Africa.",
-    "Kwame turned an InnoSCI capstone into a career building products used by millions.",
-    "Zuri leads a distributed data team turning complex insights into inclusive products.",
-    "Tariq has delivered transformation programmes across three continents.",
-    "Nia helps organisations build trusted digital infrastructure and safer customer experiences.",
-  ][index],
-  quote: [
-    "Stay curious. The cloud has no ceiling.",
-    "Build with empathy, then build for scale.",
-    "Data becomes powerful when everyone can understand it.",
-    "Progress begins when the whole team sees the vision.",
-    "Security is ultimately about protecting people.",
-  ][index],
+  story: spotlight[index]?.story || "",
+  quote: spotlight[index]?.quote || "",
 }));
 
-const jobs = [
-  {
-    title: "Cloud Support Engineer",
-    company: "NovaStack Africa",
-    location: "Lagos · Hybrid",
-    type: "Full-time",
-    category: "Cloud",
-    date: "2 days ago",
-    description: "Help ambitious teams build, operate and optimise secure cloud infrastructure.",
-  },
-  {
-    title: "Graduate Software Developer",
-    company: "Kora Digital",
-    location: "Accra · Remote",
-    type: "Graduate programme",
-    category: "Engineering",
-    date: "4 days ago",
-    description: "Join a 12-month engineering rotation and ship products with senior mentors.",
-  },
-  {
-    title: "Data Analyst Intern",
-    company: "InsightBridge",
-    location: "Nairobi · Hybrid",
-    type: "Internship",
-    category: "Data",
-    date: "1 week ago",
-    description: "Translate customer and market data into clear stories for growing businesses.",
-  },
-  {
-    title: "Women in Tech Networking Night",
-    company: "InnoSCI Community",
-    location: "Online",
-    type: "Networking",
-    category: "Events",
-    date: "1 week ago",
-    description: "Meet alumni leaders, exchange ideas and grow your professional circle.",
-  },
-];
+const jobs = job;
 
-const pendingSeed = [
-  { name: "Chidera Eze", email: "chidera.eze@email.com", year: "2024", program: "Cloud Computing", date: "May 24, 2025" },
-  { name: "Malik Owusu", email: "malik.owusu@email.com", year: "2023", program: "Software Development", date: "May 23, 2025" },
-  { name: "Lerato Ndlovu", email: "lerato.n@email.com", year: "2022", program: "Data Analytics", date: "May 22, 2025" },
-  { name: "Idris Kamara", email: "idris.k@email.com", year: "2024", program: "Cybersecurity", date: "May 21, 2025" },
-];
+const pendingSeed = pendingSeeds;
 
-const pageLabels: Record<Page, string> = {
-  home: "Home",
-  register: "Registration",
-  dashboard: "My Dashboard",
-  directory: "Alumni Directory",
-  mentorship: "Mentorship",
-  jobs: "Job Opportunities",
-  admin: "Admin Console",
-};
+const pageLabels: Record<Page, string> = pageLabel;
 
 function Button({
   children,

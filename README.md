@@ -1,6 +1,6 @@
 # innosci-alumni-connect
 An alumni management and engagement platform that connects graduates through a secure, centralized digital community.
-# Frontend command
+# Run command in Frontend folder
 <!--For the first time run this command-->
 npm create vite@latest . -- --template react-ts 
 <!-- Install Dependencies -->
