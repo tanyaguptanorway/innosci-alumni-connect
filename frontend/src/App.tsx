@@ -385,7 +385,7 @@ function HomePage({ setPage }: { setPage: (page: Page) => void }) {
               <Sparkles className="size-4" /> Built for every chapter after graduation
             </div>
             <h1 className="text-5xl font-bold leading-[1.06] tracking-[-0.045em] md:text-7xl">
-              Once an InnoSCI Graduate, <span className="text-teal-300">always part of the InnoSCI community.</span>
+              Once an InnoSCI Graduates, <span className="text-teal-300">always part of the InnoSCI community.</span>
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-8 text-slate-300">
               Reconnect, collaborate, mentor and grow with the InnoSCI alumni community.
@@ -417,7 +417,7 @@ function HomePage({ setPage }: { setPage: (page: Page) => void }) {
               <img src={photos[5 % photos.length]} alt="InnoSCI alumni working together" className="h-[470px] w-full rounded-[1.4rem] object-cover" />
             </div>
             <div className="absolute -bottom-7 right-0 w-64 -rotate-2 rounded-2xl bg-white p-5 text-slate-950 shadow-2xl">
-              <div className="flex items-center justify-between"><Pill>Community pulse</Pill><TrendingUp className="size-5 text-teal-600" /></div>
+              <div className="flex items-center justify-between"><Pill>Community pulses</Pill><TrendingUp className="size-5 text-teal-600" /></div>
               <div className="mt-4 text-3xl font-bold">86%</div>
               <div className="mt-1 text-xs leading-5 text-slate-500">of members made a meaningful professional connection this month.</div>
             </div>
