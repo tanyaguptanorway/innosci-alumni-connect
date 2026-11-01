@@ -1,11 +1,18 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 
 from backend import services
+
 from backend.schemas import (
     UserCreate,
     UserResponse,
     RegisterUserResponse,
 )
+
+from backend.auth import (
+    get_current_user,
+    require_admin
+)
+
 
 app = FastAPI()
 
@@ -15,6 +22,7 @@ def home():
     return {
         "message": "Innosci Alumni Backend is running"
     }
+
 
 @app.get("/users", response_model=dict[str, list[UserResponse]])
 def get_users():
@@ -27,5 +35,15 @@ def register_user(user: UserCreate):
 
 
 @app.put("/users/{user_id}/approve")
-def approve_user(user_id: str):
+def approve_user(
+    user_id: str,
+    current_user = Depends(require_admin)
+):
     return services.approve_user(user_id)
+
+
+@app.get("/me")
+def get_me(
+    user=Depends(get_current_user)
+):
+    return user
