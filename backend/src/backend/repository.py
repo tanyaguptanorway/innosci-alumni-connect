@@ -116,3 +116,26 @@ def approve_user(user_id):
     finally:
         connection.close()
         print("Repository: Connection closed")
+
+def get_user_by_cognito_sub(cognito_sub):
+
+    connection = db_utils.get_db_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT *
+            FROM users
+            WHERE cognito_sub = %(cognito_sub)s
+            """,
+            {
+                "cognito_sub": cognito_sub
+            }
+        )
+
+        return cursor.fetchone()
+
+    finally:
+        connection.close()

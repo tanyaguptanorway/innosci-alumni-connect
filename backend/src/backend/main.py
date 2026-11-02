@@ -46,4 +46,8 @@ def approve_user(
 def get_me(
     user=Depends(get_current_user)
 ):
-    return user
+    cognito_sub = user["sub"]
+
+    return services.get_user_profile(
+        cognito_sub
+    )

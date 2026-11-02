@@ -83,3 +83,27 @@ def approve_user(user_id: str):
     return {
         "message": "User approved successfully"
     }
+
+def get_user_profile(cognito_sub):
+
+    user = repository.get_user_by_cognito_sub(
+        cognito_sub
+    )
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="User profile not found"
+        )
+
+    return {
+        "user_id": user["user_id"],
+        "email": user["email"],
+        "full_name": user["full_name"],
+        "role": user["role"],
+        "status": user["status"],
+        "graduation_year": user["graduation_year"],
+        "program": user["program"],
+        "skills": user["skills"],
+        "bio": user["bio"],
+    }
