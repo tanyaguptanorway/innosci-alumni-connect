@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field
-
+from typing import Optional
 
 class UserCreate(BaseModel):
 
@@ -56,3 +56,28 @@ class RegisterUserResponse(BaseModel):
 
     message: str
     user_id: str
+
+
+class UserUpdate(BaseModel):
+    full_name: Optional[str] = None
+    graduation_year: Optional[int] = None
+    program: Optional[str] = None
+    linkedin_url: Optional[str] = None
+    skills: Optional[str] = None
+    bio: Optional[str] = None
+    phone: Optional[str] = None
+    location: Optional[str] = None
+    job_title: Optional[str] = None
+    company: Optional[str] = None
+    interests: Optional[str] = None
+    profile_picture_url: Optional[str] = None
+
+
+class SpotlightCreate(BaseModel):
+
+    title: str
+    alumni_name: Optional[str] = None
+    summary: Optional[str] = None
+    image_url: Optional[str] = None
+    podcast_url: Optional[str] = None
+    sort_order: int = 0
