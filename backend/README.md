@@ -129,16 +129,25 @@ Bearer eyJxxxxxxxx
 # Authentication Flow
 
 ```
-Frontend Login
-      |
-      v
+Frontend / Test Client
+        |
+        | Login with SPA App Client
+        |
+        v
 AWS Cognito
-      |
-      v
-JWT Access Token
-      |
-      v
-FastAPI APIs
+        |
+        | JWT Access Token
+        |
+        v
+FastAPI Backend
+        |
+        | verify_token()
+        |
+        v
+MySQL User Lookup
+        |
+        v
+/me response
 ```
 
 Protected requests must include:
