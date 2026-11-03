@@ -173,6 +173,61 @@ Current backend supports:
 
 ---
 
+# Full architecture
+
+```
+                         ┌───────────────┐
+                         │     USER      │
+                         │   Browser     │
+                         └───────┬───────┘
+                                 │
+                                 ▼
+
+                  ┌────────────────────────┐
+                  │       FRONTEND         │
+                  │    React Application   │
+                  │                        │
+                  │ - Login / Signup       │
+                  │ - Profile              │
+                  │ - Search               │
+                  │ - Spotlight Carousel   │
+                  │ - Admin Screens        │
+                  └───────────┬────────────┘
+                              │
+              ┌───────────────┴───────────────┐
+              │                               │
+              │ Authentication                │ API Requests
+              │                               │ JWT Token
+              ▼                               ▼
+
+       ┌───────────────┐          ┌──────────────────────┐
+       │ AWS COGNITO   │          │   FASTAPI BACKEND    │
+       │               │          │ Elastic Beanstalk    │
+       │ - Signup      │          │                      │
+       │ - Login       │          │ - API Endpoints      │
+       │ - JWT Tokens  │          │ - JWT Verification   │
+       │               │          │ - Business Logic     │
+       └───────────────┘          │ - User Management    │
+                                  │ - Admin Workflow     │
+                                  │ - Spotlight APIs     │
+                                  └──────────┬───────────┘
+                                             │
+                                             │ SQL
+                                             ▼
+
+                                  ┌──────────────────────┐
+                                  │      MYSQL DB        │
+                                  │       (RDS)          │
+                                  │                      │
+                                  │ Tables:              │
+                                  │ - users              │
+                                  │ - spotlight          │
+                                  └──────────────────────┘
+```
+
+
+---
+
 # Frontend Notes
 
 - Users appear in the directory only after admin approval.
