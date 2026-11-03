@@ -164,19 +164,6 @@ Current backend supports:
 
 ---
 
-# API Groups
-
-Refer to Swagger `/docs` for details:
-
-```
-/users
-/me
-/admin/*
-/spotlights
-```
-
----
-
 # Frontend Notes
 
 - Users appear in the directory only after admin approval.
