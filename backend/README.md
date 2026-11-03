@@ -185,7 +185,8 @@ Current backend supports:
 
                   ┌────────────────────────┐
                   │       FRONTEND         │
-                  │    React Application   │
+                  │   React Application    │
+                  │  (AWS cloudfront + s3) │
                   │                        │
                   │ - Login / Signup       │
                   │ - Profile              │
