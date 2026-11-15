@@ -1,19 +1,26 @@
-import boto3
+import os
 import json
 
+from dotenv import load_dotenv
+from openai import OpenAI
 
-bedrock_client = boto3.client(
-    "bedrock-runtime",
-    region_name="eu-north-1"
+
+load_dotenv()
+
+
+client = OpenAI(
+    api_key=os.getenv("BEDROCK_OPENAI_API_KEY"),
+    base_url=os.getenv("BEDROCK_OPENAI_BASE_URL")
 )
+
+
+MODEL = "openai.gpt-oss-120b"
 
 
 def recommend_mentors(user_profile, mentors):
 
     prompt = f"""
 You are an alumni mentoring assistant.
-
-Analyze the user's profile and find the best mentors.
 
 User Profile:
 {json.dumps(user_profile, indent=2)}
@@ -28,46 +35,27 @@ Format:
 [
   {{
     "mentor_name": "",
-    "match_score": integer between 0 and 100,
+    "match_score": 0,
     "reason": "",
     "matched_skills": []
   }}
 ]
-
-Calculate the score based on:
-- 40% skill similarity
-- 30% career goal alignment
-- 20% industry experience
-- 10% location or availability
 """
 
-    response = bedrock_client.invoke_model(
-        modelId="amazon.nova-lite-v1:0",
-        body=json.dumps({
-            "messages": [
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "text": prompt
-                        }
-                    ]
-                }
-            ]
-        }),
-        contentType="application/json",
-        accept="application/json"
+    response = client.responses.create(
+        model=MODEL,
+        input=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
     )
 
-    result = json.loads(response["body"].read())
+    text = response.output_text
 
-    # Extract Bedrock text response
-    text = result["output"]["message"]["content"][0]["text"]
-
-    # Remove markdown JSON wrapper if Bedrock adds it
     text = text.replace("```json", "")
     text = text.replace("```", "")
     text = text.strip()
 
-    # Convert AI text into real JSON
     return json.loads(text)
