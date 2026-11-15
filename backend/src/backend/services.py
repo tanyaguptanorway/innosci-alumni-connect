@@ -5,6 +5,7 @@ from fastapi import HTTPException
 
 from backend import repository
 from backend.schemas import UserCreate
+from backend.mentor_ai import recommend_mentors
 
 
 def register_user(user: UserCreate):
@@ -285,3 +286,95 @@ def delete_spotlight(slide_id):
     return {
         "message": "Spotlight deleted successfully"
     }
+
+
+def get_recommended_mentors_by_cognito(cognito_user):
+
+    print("Service: Getting mentor recommendations")
+
+    cognito_sub = cognito_user.get("sub")
+
+    if not cognito_sub:
+        raise HTTPException(
+            status_code=401,
+            detail="Cognito subject missing"
+        )
+
+
+    # Get logged-in user
+    user = repository.get_user_by_cognito_sub(
+        cognito_sub
+    )
+
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="User profile not found"
+        )
+
+
+    # Get mentors
+    mentors = repository.get_all_mentors()
+
+
+    user_profile = {
+        "name": user["full_name"],
+        "skills": user["skills"],
+        "program": user["program"],
+        "bio": user["bio"],
+        "job_title": user["job_title"],
+        "company": user["company"],
+        "location": user["location"]
+    }
+
+
+    mentor_profiles = []
+
+
+    for mentor in mentors:
+
+        # Do not recommend yourself
+        if mentor["user_id"] == user["user_id"]:
+            continue
+
+
+        mentor_profiles.append(
+            {
+                "name": mentor["full_name"],
+                "skills": mentor["skills"],
+                "program": mentor["program"],
+                "bio": mentor["bio"],
+                "job_title": mentor["job_title"],
+                "company": mentor["company"],
+                "location": mentor["location"]
+            }
+        )
+
+
+    return recommend_mentors(
+        user_profile,
+        mentor_profiles
+    )
+
+def get_all_mentors():
+
+    print("Repository: Fetching mentors")
+
+    connection = db_utils.get_db_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT *
+            FROM users
+            WHERE status = 'APPROVED'
+            AND role = 'ALUMNI'
+        """)
+
+        return cursor.fetchall()
+
+    finally:
+        connection.close()
+        print("Repository: Connection closed")

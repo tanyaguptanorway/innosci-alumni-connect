@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, Query
-from backend.schemas import UserUpdate
+from backend.schemas import UserUpdate, MentorRecommendation
+
 from backend import services
 
 from backend.schemas import (
@@ -154,4 +155,15 @@ def delete_spotlight(
 
     return services.delete_spotlight(
         slide_id
+    )
+
+@app.get(
+    "/mentor-recommendations",
+    response_model=list[MentorRecommendation]
+)
+def mentor_recommendations(
+    current_user=Depends(get_current_user)
+):
+    return services.get_recommended_mentors_by_cognito(
+        current_user
     )

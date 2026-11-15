@@ -454,3 +454,27 @@ def delete_spotlight(slide_id):
     finally:
         connection.close()
         print("Repository: Connection closed")
+
+def get_all_mentors():
+
+    print("Repository: Fetching mentors")
+
+    connection = db_utils.get_db_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT *
+            FROM users
+            WHERE status = 'APPROVED'
+            AND role = 'ALUMNI'
+            """
+        )
+
+        return cursor.fetchall()
+
+    finally:
+        connection.close()
+        print("Repository: Connection closed")

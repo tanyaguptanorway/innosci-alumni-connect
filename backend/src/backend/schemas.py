@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr, Field
-from typing import Optional
+from typing import Optional, List
+
 
 class UserCreate(BaseModel):
 
@@ -81,3 +82,10 @@ class SpotlightCreate(BaseModel):
     image_url: Optional[str] = None
     podcast_url: Optional[str] = None
     sort_order: int = 0
+
+
+class MentorRecommendation(BaseModel):
+    mentor_name: str
+    match_score: int
+    reason: str
+    matched_skills: List[str]
