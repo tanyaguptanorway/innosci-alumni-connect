@@ -8,7 +8,7 @@ import { useAuth } from "./AuthContext";
 import { apiFetch } from "./api";
 
 import type { Alumni, DirectoryScope, Page } from "./App";
-
+import { CareerAssistant } from "./CareerAssistant";
 type DirectoryUser = {
   user_id: string;
   full_name: string;
@@ -113,7 +113,7 @@ export function DirectoryPage({ setPage, initialScope = "all" }: { setPage: (pag
             </button>
           ))}
         </div>
-
+          {me?.role === "ALUMNI" && <CareerAssistant />}
         <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
           <div className="grid gap-3 lg:grid-cols-[1fr_220px_160px]">
             <label className="relative"><Search className="absolute left-4 top-3.5 size-5 text-slate-400" /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search name, company or skill..." className="w-full rounded-xl border border-slate-200 py-3 pl-11 pr-4 text-sm outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10" /></label>
