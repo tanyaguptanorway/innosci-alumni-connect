@@ -7,7 +7,7 @@ from pathlib import Path
 from .schemas import CareerRequest
 
 # career/ -> backend/ (pkg) -> src/ -> backend/ (folder) -> repo root
-ALUMNI_FILE = Path(__file__).resolve().parents[4] / "content" / "alumni.json"
+ALUMNI_FILE = Path(__file__).resolve().parents[3] / "content" / "alumni.json"
 
 
 @lru_cache
