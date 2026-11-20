@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, CalendarDays, Check, CircleUserRound, GraduationCap, Plus, Users } from "lucide-react";
 import { AppShell } from "./AppShell";
-import { Button, Pill } from "./components/ui";
+import { Pill } from "./components/ui";
 import { Avatar } from "./Picture";
 import { PanelHeader } from "./PanelHeader";
 import { useAuth } from "./AuthContext";
@@ -9,6 +9,7 @@ import { apiFetch } from "./api";
 import type { Alumni, DirectoryScope, Page } from "./App";
 
 import { EditProfileModal } from "./EditProfileModal";
+import { CareerAssistant } from "./CareerAssistant";
 
 export function ConnectionRow({ person }: { person: Alumni }) {
   const [connected, setConnected] = useState(false);
@@ -157,12 +158,13 @@ export function DashboardPage({ setPage, openDirectory }: { setPage: (page: Page
                 {dashboard?.suggested.map((person) => <SuggestedRow key={person.user_id} person={person} />)}
               </div>
             </div>
-            <div>
+            {/* <div>
               <PanelHeader title="Mentorship" action="View hub" onClick={() => setPage("mentorship")} />
               <div className="rounded-2xl bg-teal-600 p-5 text-white"><CalendarDays className="size-6 text-teal-200" /><div className="mt-4 font-bold">Cloud careers circle</div><p className="mt-2 text-xs leading-5 text-teal-50/80">Thursday, 6:00 PM · Online<br />12 alumni attending</p><Button onClick={() => setPage("mentorship")} className="mt-4 w-full bg-teal-500 text-teal-800 hover:bg-white hover:text-black">View event</Button></div>
-            </div>
+            </div> */}
           </div>
         </div>
+        {me?.role === "ALUMNI" && <CareerAssistant />}
       </div>
       {editing && <EditProfileModal onClose={() => setEditing(false)} onSaved={load} />}
     </AppShell>
